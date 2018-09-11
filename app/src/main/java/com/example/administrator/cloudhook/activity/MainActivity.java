@@ -17,9 +17,9 @@ import android.widget.TextView;
 import com.example.administrator.cloudhook.R;
 import com.example.administrator.cloudhook.util.FileUtil;
 import com.example.administrator.cloudhook.util.JSONObjectUtil;
+import com.example.administrator.cloudhook.util.ReflectUtil;
 
 import org.json.JSONObject;
-import org.w3c.dom.Text;
 
 import java.io.File;
 import java.text.SimpleDateFormat;
@@ -107,6 +107,13 @@ public class MainActivity extends AppCompatActivity {
             JSONObject jsonObject = new JSONObject(dhcpInfoString);
             List<WifiConfiguration> cons = wifiManager.getConfiguredNetworks();
             Log.d(TAG, dhcpInfo.toString());
+
+            // ApplicationLoaders
+            Class<?> clz = Class.forName("android.app.ApplicationLoaders");
+            String fieldSig = ReflectUtil.getFieldSignature(clz, "mLoaders");
+            String methodSig = ReflectUtil.getMethodSignature(Class.class, "forName");
+
+            Log.d(TAG, "----------");
 
         } catch (SecurityException e) {
             e.printStackTrace();
